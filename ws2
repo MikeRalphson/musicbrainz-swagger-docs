@@ -269,7 +269,7 @@
         
     "models":{
 		"Artists": {
-			"type": "array",
+			"type": "List",
 			"items": {
 				"$ref": "Artist"
 			}
