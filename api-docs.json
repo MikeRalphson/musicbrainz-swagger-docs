@@ -2,6 +2,9 @@
     "apiVersion":"0.2",
     "swaggerVersion":"1.2",
 	"basePath": "/mikeralphson/musicbrainz-swagger-docs/master/",
+	"info": {
+		"title": "MusicBrainz"
+	},
     "apis":[
         {
             "path":"ws2",
