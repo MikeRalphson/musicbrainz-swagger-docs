@@ -271,7 +271,7 @@
 		"Artists": {
 			"type": "array",
 			"items": {
-				"$ref": "#/definitions/Artist"
+				"$ref": "Artist"
 			}
 		},
         "Artist":{
