@@ -2,33 +2,30 @@ swagger: '2.0'
 schemes:
   - http
 host: musicbrainz.org
-basePath: /
+basePath: /ws2/
 info:
   title: MusicBrainz
-  version: '0.2'
-  x-apisguru-categories:
-    - media
-  x-origin:
-    - converter:
-        url: 'https://github.com/lucybot/api-spec-converter'
-        version: 2.0.1
-      format: swagger
-      url: 'https://raw.githubusercontent.com/MikeRalphson/musicbrainz-swagger-docs/master/api-docs.json'
-      version: '1.2'
-  x-providerName: musicbrainz.org
-  x-unofficialSpec: true
+  description: MusicBrainz Web Service
+  version: '2.0'
 produces:
   - application/xml
   - application/json
 tags:
   - description: Web Service Version 2
     name: ws2
+parameters:
+  user-agent:
+    name: User-Agent
+    in: header
+    type: string
+    required: true
 paths:
-  /ws/2/artist:
+  /artist:
     get:
       description: Search artists
       operationId: searchForArtist
       parameters:
+        - $ref: '#/parameters/user-agent'
         - description: MusicBrainz ID of the artist
           in: query
           name: query
@@ -59,11 +56,12 @@ paths:
       summary: Search for artists
       tags:
         - ws2
-  '/ws/2/artist/{mbid}':
+  '/artist/{mbid}':
     get:
       description: Returns the artist with the mbid
       operationId: lookupArtistById
       parameters:
+        - $ref: '#/parameters/user-agent'
         - description: MusicBrainz ID of the artist
           in: path
           name: mbid
@@ -87,11 +85,12 @@ paths:
       summary: Lookup an artist by mbid
       tags:
         - ws2
-  '/ws/2/release/{mbid}':
+  '/release/{mbid}':
     get:
       description: Returns the release with the mbid
       operationId: lookupReleaseById
       parameters:
+        - $ref: '#/parameters/user-agent'
         - description: MusicBrainz ID of the release
           in: path
           name: mbid
