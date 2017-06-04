@@ -1,0 +1,199 @@
+swagger: '2.0'
+schemes:
+  - http
+host: musicbrainz.org
+basePath: /
+info:
+  title: MusicBrainz
+  version: '0.2'
+  x-apisguru-categories:
+    - media
+  x-origin:
+    - converter:
+        url: 'https://github.com/lucybot/api-spec-converter'
+        version: 2.0.1
+      format: swagger
+      url: 'https://raw.githubusercontent.com/MikeRalphson/musicbrainz-swagger-docs/master/api-docs.json'
+      version: '1.2'
+  x-providerName: musicbrainz.org
+  x-unofficialSpec: true
+produces:
+  - application/xml
+  - application/json
+tags:
+  - description: Web Service Version 2
+    name: ws2
+paths:
+  /ws/2/artist:
+    get:
+      description: Search artists
+      operationId: searchForArtist
+      parameters:
+        - description: MusicBrainz ID of the artist
+          in: query
+          name: query
+          required: true
+          type: string
+        - description: maximum number of results
+          format: int32
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - description: where to start
+          format: int32
+          in: query
+          name: offset
+          required: false
+          type: integer
+        - description: format of the result
+          in: query
+          name: fmt
+          required: false
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Artists'
+      summary: Search for artists
+      tags:
+        - ws2
+  '/ws/2/artist/{mbid}':
+    get:
+      description: Returns the artist with the mbid
+      operationId: lookupArtistById
+      parameters:
+        - description: MusicBrainz ID of the artist
+          in: path
+          name: mbid
+          required: true
+          type: string
+        - description: includes
+          in: query
+          name: inc
+          required: false
+          type: string
+        - description: format of the result
+          in: query
+          name: fmt
+          required: false
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Artist'
+      summary: Lookup an artist by mbid
+      tags:
+        - ws2
+  '/ws/2/release/{mbid}':
+    get:
+      description: Returns the release with the mbid
+      operationId: lookupReleaseById
+      parameters:
+        - description: MusicBrainz ID of the release
+          in: path
+          name: mbid
+          required: true
+          type: string
+        - description: includes
+          in: query
+          name: inc
+          required: false
+          type: string
+        - description: search query
+          in: query
+          name: search
+          required: false
+          type: string
+        - description: format of the result
+          in: query
+          name: fmt
+          required: false
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/Release'
+      summary: Lookup a release by mbid
+      tags:
+        - ws2
+definitions:
+  Artist:
+    properties:
+      country:
+        description: 2 letter country code
+        type: string
+      disambiguation:
+        type: string
+      id:
+        description: MusicBrainz id
+        type: string
+      ipis:
+        items:
+          type: string
+        type: array
+      life-span:
+        $ref: '#/definitions/LifeSpan'
+      name:
+        type: string
+      releases:
+        items:
+          $ref: '#/definitions/Release'
+        type: array
+      sort-name:
+        type: string
+      type:
+        type: string
+    required:
+      - id
+      - name
+      - sort-name
+  Artists:
+    items:
+      $ref: '#/definitions/Artist'
+    type: array
+  LifeSpan:
+    properties:
+      begin:
+        type: string
+      end:
+        type: string
+      ended:
+        type: boolean
+  Medium:
+    properties:
+      track-offset:
+        format: int32
+        type: integer
+      tracks:
+        items:
+          $ref: '#/definitions/Track'
+        type: array
+  Release:
+    properties:
+      country:
+        description: 2 letter country code
+        type: string
+      id:
+        type: string
+      media:
+        items:
+          $ref: '#/definitions/Medium'
+        type: array
+    required:
+      - id
+  Track:
+    properties:
+      length:
+        format: int32
+        type: integer
+      number:
+        description: A textual position of the track
+        type: string
+      position:
+        description: The integer position in the TOC
+        format: int32
+        type: integer
