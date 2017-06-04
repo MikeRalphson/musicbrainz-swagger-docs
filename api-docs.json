@@ -4,7 +4,7 @@
 	"basePath": "/mikeralphson/musicbrainz-swagger-docs/master/",
     "apis":[
         {
-            "path":"/ws2",
+            "path":"ws2",
             "description":"Web Service Version 2"
         }
     ]
